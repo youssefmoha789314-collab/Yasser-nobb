@@ -1,4 +1,4 @@
--- YASSER HUB (Part 1 / 2)
+-- YASSER HUB (Complete)
 
 local success, library = pcall(function()
     return loadstring(game:HttpGet("https://raw.githubusercontent.com/memejames/elerium-v2-ui-library/main/Library", true))()
@@ -14,7 +14,7 @@ local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local camera = workspace.CurrentCamera
  
-local window = library:AddWindow("Yasser Hub 🐉♥️ (Part 1)", {
+local window = library:AddWindow("Yasser Hub 🐉♥️", {
     main_color = Color3.fromRGB(0, 0, 0),
     min_size = Vector2.new(700, 900),
     can_resize = true,
@@ -36,7 +36,7 @@ mainTab:Show()
  
 mainTab:AddLabel("Main Features")
 
--- الأوتو ليفت السريع والصامت (كانه قيم باس بدون إزعاج)
+-- الأوتو ليفت السريع والصامت
 mainTab:AddSwitch("Auto Lift", function(bool)
     getgenv().SilentAutoLift = bool
     task.spawn(function()
@@ -65,7 +65,7 @@ for _, moveName in ipairs(movesList) do
     end)
 end
  
-local autoEatEggsSwitch = mainTab:AddSwitch("Auto Eat Eggs", function(bool)
+mainTab:AddSwitch("Auto Eat Eggs", function(bool)
     _G.AutoEgg = bool
     if bool then
         task.spawn(function()
@@ -87,7 +87,7 @@ local autoEatEggsSwitch = mainTab:AddSwitch("Auto Eat Eggs", function(bool)
     end
 end)
  
-local autoEatPineappleSwitch = mainTab:AddSwitch("Auto Eat Pineapple", function(bool)
+mainTab:AddSwitch("Auto Eat Pineapple", function(bool)
     _G.AutoPineapple = bool
     if bool then
         task.spawn(function()
@@ -105,7 +105,7 @@ local autoEatPineappleSwitch = mainTab:AddSwitch("Auto Eat Pineapple", function(
                 end
                 task.wait(1)
             end
-end)
+        end)
     end
 end)
  
@@ -122,7 +122,7 @@ mainTab:AddSwitch("Anti-Knockback", function(bool)
     else
         pcall(function()
             local rootPart = player.Character:FindFirstChild("HumanoidRootPart")
-            local existingVelocity = rootPart:FindFirstChild("BodyVelocity")
+            local existingVelocity = rootPart and rootPart:FindFirstChild("BodyVelocity")
             if existingVelocity then
                 existingVelocity:Destroy()
             end
@@ -147,7 +147,7 @@ local function addRockSwitch(name, minDur)
     farmTab:AddSwitch("Farm " .. name, function(bool)
         getgenv().autoFarm = bool
         if bool then
-            spawn(function()
+            task.spawn(function()
                 while getgenv().autoFarm do
                     task.wait()
                     pcall(function()
@@ -159,11 +159,18 @@ local function addRockSwitch(name, minDur)
      
                                     firetouchinterest(v.Parent.Rock, player.Character.RightHand, 0)
                                     firetouchinterest(v.Parent.Rock, player.Character.RightHand, 1)
-                                    firetouchint-- YASSER HUB (Part 2 / 2)
+                                end
+                            end
+                        end
+                    end)
+                end
+            end)
+        end
+    end)
+end
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
+addRockSwitch("Rock 1k", 1000)
+addRockSwitch("Rock 5k", 5000)
 
 -- STATS TAB
 statsTab:AddLabel("--- Player Stats Scanner ---")
@@ -271,7 +278,7 @@ pets:AddButton("Equip Swift Samurai", function()
         for _, folder in pairs(petsFolder:GetChildren()) do
             if folder:IsA("Folder") then
                 for _, pet in pairs(folder:GetChildren()) do
-if pet.Name == "Swift Samurai" then
+                    if pet.Name == "Swift Samurai" then
                         ReplicatedStorage.rEvents.equipPetEvent:FireServer("equipPet", pet)
                     end
                 end

@@ -14,7 +14,7 @@ local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local camera = workspace.CurrentCamera
  
-local window = library:AddWindow("Yasser Hub 🐉♥️", {
+local window = library:AddWindow(" تم الاختراق من فهد", {
     main_color = Color3.fromRGB(0, 0, 0),
     min_size = Vector2.new(700, 900),
     can_resize = true,

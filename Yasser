@@ -1,0 +1,292 @@
+-- YASSER HUB (Part 1 / 2)
+
+local success, library = pcall(function()
+    return loadstring(game:HttpGet("https://raw.githubusercontent.com/memejames/elerium-v2-ui-library/main/Library", true))()
+end)
+
+if not success or not library then
+    warn("Failed to load Elerium library!")
+    return
+end
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local camera = workspace.CurrentCamera
+ 
+local window = library:AddWindow("Yasser Hub 🐉♥️ (Part 1)", {
+    main_color = Color3.fromRGB(0, 0, 0),
+    min_size = Vector2.new(700, 900),
+    can_resize = true,
+})
+ 
+local mainTab = window:AddTab("Main")
+local farmTab = window:AddTab("Farm")
+local killerTab = window:AddTab("Killer")
+local eggTab = window:AddTab("Auto Hatch")
+local teleportTab = window:AddTab("Teleport")
+local statsTab = window:AddTab("Stats")
+local performanceTab = window:AddTab("Performance")
+local rebirth = window:AddTab("Rebirth")
+local pets = window:AddTab("Pets")
+local serverTab = window:AddTab("Server")
+local creditsTab = window:AddTab("Credits")
+ 
+mainTab:Show()
+ 
+mainTab:AddLabel("Main Features")
+
+-- الأوتو ليفت السريع والصامت (كانه قيم باس بدون إزعاج)
+mainTab:AddSwitch("Auto Lift", function(bool)
+    getgenv().SilentAutoLift = bool
+    task.spawn(function()
+        while getgenv().SilentAutoLift do
+            pcall(function()
+                local rEvents = ReplicatedStorage:FindFirstChild("rEvents")
+                local muscleEvent = rEvents and rEvents:FindFirstChild("muscleEvent")
+                
+                if muscleEvent then
+                    muscleEvent:FireServer("rep")
+                end
+            end)
+            task.wait(0.03)
+        end
+    end)
+end)
+
+-- قسم الحركات والتدريبات (Moves)
+mainTab:AddLabel("--- Moves & Exercises ---")
+local movesList = {"Ground Slam", "Handstands", "Punch", "Pushups", "Situps", "Stomp", "Weight"}
+for _, moveName in ipairs(movesList) do
+    mainTab:AddButton("Equip/Use: " .. moveName, function()
+        pcall(function()
+            ReplicatedStorage.rEvents.muscleEvent:FireServer(moveName)
+        end)
+    end)
+end
+ 
+local autoEatEggsSwitch = mainTab:AddSwitch("Auto Eat Eggs", function(bool)
+    _G.AutoEgg = bool
+    if bool then
+        task.spawn(function()
+            while _G.AutoEgg do
+                local proteinEgg = player.Backpack:FindFirstChild("Protein Egg") or player.Backpack:FindFirstChild("ProteinEgg")
+                if proteinEgg then
+                    proteinEgg.Parent = player.Character
+                    local vim = game:GetService("VirtualInputManager")
+                    for i = 1, 5 do
+                        vim:SendMouseButtonEvent(0, 0, 0, true, game, 1)
+                        task.wait()
+                        vim:SendMouseButtonEvent(0, 0, 0, false, game, 1)
+                        task.wait(0.1)
+                    end
+                end
+                task.wait(1)
+            end
+        end)
+    end
+end)
+ 
+local autoEatPineappleSwitch = mainTab:AddSwitch("Auto Eat Pineapple", function(bool)
+    _G.AutoPineapple = bool
+    if bool then
+        task.spawn(function()
+            while _G.AutoPineapple do
+                local tropicalShake = player.Backpack:FindFirstChild("Tropical Shake")
+                if tropicalShake then
+                    tropicalShake.Parent = player.Character
+                    local vim = game:GetService("VirtualInputManager")
+                    for i = 1, 5 do
+                        vim:SendMouseButtonEvent(0, 0, 0, true, game, 1)
+                        task.wait()
+                        vim:SendMouseButtonEvent(0, 0, 0, false, game, 1)
+                        task.wait(0.1)
+                    end
+                end
+                task.wait(1)
+            end
+end)
+    end
+end)
+ 
+mainTab:AddSwitch("Anti-Knockback", function(bool)
+    if bool then
+        pcall(function()
+            local rootPart = player.Character:FindFirstChild("HumanoidRootPart")
+            local bodyVelocity = Instance.new("BodyVelocity")
+            bodyVelocity.MaxForce = Vector3.new(100000, 0, 100000)
+            bodyVelocity.Velocity = Vector3.new(0, 0, 0)
+            bodyVelocity.P = 1250
+            bodyVelocity.Parent = rootPart
+        end)
+    else
+        pcall(function()
+            local rootPart = player.Character:FindFirstChild("HumanoidRootPart")
+            local existingVelocity = rootPart:FindFirstChild("BodyVelocity")
+            if existingVelocity then
+                existingVelocity:Destroy()
+            end
+        end)
+    end
+end)
+ 
+-- FARM TAB
+farmTab:AddLabel("Rock Farming")
+ 
+local function gettool()
+    for i, v in pairs(player.Backpack:GetChildren()) do
+        if v.Name == "Punch" and player.Character:FindFirstChild("Humanoid") then
+            player.Character.Humanoid:EquipTool(v)
+        end
+    end
+    ReplicatedStorage.rEvents.muscleEvent:FireServer("punch", "leftHand")
+    ReplicatedStorage.rEvents.muscleEvent:FireServer("punch", "rightHand")
+end
+ 
+local function addRockSwitch(name, minDur)
+    farmTab:AddSwitch("Farm " .. name, function(bool)
+        getgenv().autoFarm = bool
+        if bool then
+            spawn(function()
+                while getgenv().autoFarm do
+                    task.wait()
+                    pcall(function()
+                        if player.Durability.Value >= minDur then
+                            for i, v in pairs(workspace.machinesFolder:GetDescendants()) do
+                                if v.Name == "neededDurability" and v.Value == minDur and 
+                                   player.Character:FindFirstChild("LeftHand") and 
+                                   player.Character:FindFirstChild("RightHand") then
+     
+                                    firetouchinterest(v.Parent.Rock, player.Character.RightHand, 0)
+                                    firetouchinterest(v.Parent.Rock, player.Character.RightHand, 1)
+                                    firetouchint-- YASSER HUB (Part 2 / 2)
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+-- STATS TAB
+statsTab:AddLabel("--- Player Stats Scanner ---")
+local selectedStatPlayer = nil
+local statInfoLabel = statsTab:AddLabel("Status: No player selected")
+
+for _, p in pairs(Players:GetPlayers()) do
+    if p ~= player then
+        statsTab:AddButton("Scan: " .. p.Name, function()
+            selectedStatPlayer = p
+        end)
+    end
+end
+
+task.spawn(function()
+    while true do
+        pcall(function()
+            if selectedStatPlayer and selectedStatPlayer.Parent then
+                local strVal, durVal = "0", "0"
+                
+                local leaderstats = selectedStatPlayer:FindFirstChild("leaderstats")
+                if leaderstats then
+                    for _, stat in pairs(leaderstats:GetChildren()) do
+                        local sName = string.lower(stat.Name)
+                        if sName:find("strength") then
+                            strVal = tostring(stat.Value)
+                        elseif sName:find("durability") or sName:find("defense") then
+                            durVal = tostring(stat.Value)
+                        end
+                    end
+                end
+                
+                if selectedStatPlayer:FindFirstChild("Durability") then
+                    durVal = tostring(selectedStatPlayer.Durability.Value)
+                end
+                if selectedStatPlayer:FindFirstChild("Strength") then
+                    strVal = tostring(selectedStatPlayer.Strength.Value)
+                end
+
+                statInfoLabel.Text = "[" .. selectedStatPlayer.Name .. "] | Strength: " .. strVal .. " | Durability: " .. durVal
+            end
+        end)
+        task.wait(1)
+    end
+end)
+
+-- PERFORMANCE TAB
+performanceTab:AddLabel("--- Performance ---")
+performanceTab:AddSwitch("Anti Lag", function(bool)
+    local lighting = game:GetService("Lighting")
+    if bool then
+        pcall(function()
+            for _, gui in pairs(player.PlayerGui:GetChildren()) do
+                if gui:IsA("ScreenGui") then gui:Destroy() end
+            end
+            for _, obj in pairs(workspace:GetDescendants()) do
+                if obj:IsA("ParticleEmitter") or obj:IsA("PointLight") or obj:IsA("SpotLight") then
+                    obj:Destroy()
+                end
+            end
+            lighting.Brightness = 0
+            lighting.ClockTime = 0
+            lighting.OutdoorAmbient = Color3.new(0,0,0)
+        end)
+    end
+end)
+
+performanceTab:AddSwitch("Anti AFK", function(bool)
+    if bool then
+        getgenv().AntiAfkExecuted = true
+        local vu = game:GetService('VirtualUser')
+        player.Idled:Connect(function()
+            if getgenv().AntiAfkExecuted then
+                vu:CaptureController()
+                vu:ClickButton2(Vector2.new())
+            end
+        end)
+    else
+        getgenv().AntiAfkExecuted = false
+    end
+end)
+
+-- REBIRTH TAB
+rebirth:AddLabel("--- Rebirth ---")
+rebirth:AddSwitch("Fast Rebirths", function(bool)
+    getgenv().AutoRebirth = bool
+    if bool then
+        task.spawn(function()
+            while getgenv().AutoRebirth do
+                pcall(function()
+                    ReplicatedStorage.rEvents.rebirthRemote:FireServer()
+                end)
+                task.wait(0.25)
+            end
+        end)
+    end
+end)
+
+-- PETS TAB
+pets:AddLabel("--- Pets ---")
+pets:AddButton("Equip Swift Samurai", function()
+    pcall(function()
+        local petsFolder = player:FindFirstChild("petsFolder")
+        if not petsFolder then return end
+        for _, folder in pairs(petsFolder:GetChildren()) do
+            if folder:IsA("Folder") then
+                for _, pet in pairs(folder:GetChildren()) do
+if pet.Name == "Swift Samurai" then
+                        ReplicatedStorage.rEvents.equipPetEvent:FireServer("equipPet", pet)
+                    end
+                end
+            end
+        end
+    end)
+end)
+ 
+-- SERVER TAB
+serverTab:AddLabel("Server Options")
+serverTab:AddButton("Rejoin Server", function()
+    game:GetService("TeleportService"):Teleport(game.PlaceId, player)
+end)
+
+-- CREDITS TAB
+creditsTab:AddLabel("--- Credits ---")
+creditsTab:AddLabel("Creator: Nour")
+creditsTab:AddLabel("Developer: Yasser")
